@@ -16,3 +16,4 @@
       (if (atom? (car l))
           (lat? (cdr l))
           #f)))
+
