@@ -68,4 +68,3 @@
     [(or (eq? (car lat) old1) (eq? (car lat) old2)) (cons new (cdr lat))]
     [(cons (car lat) (subst2 new old1 old2 (cdr lat)))]
     ))
-
