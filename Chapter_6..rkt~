@@ -3,7 +3,7 @@
 (define (numbered? aexp)
   (cond
     [(atom? aexp) (number? aexp)]
-    [(and (numbered? (car aexp)) (numbered? (car (cdr (cdr aexp)))))]))
+    [(and (numbered? car (aexp)) (car (cdr (cdr aexp))))]))
 
 (define (1st-sub-exp aexp)
   (car (cdr aexp)))
