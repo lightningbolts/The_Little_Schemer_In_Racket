@@ -35,12 +35,12 @@
 (define (union set1 set2)
   (cond
     [(null? set1) set2]
-    [(member? (car set1) (set2)) (union (cdr set1) (set2))]
+    [(member? (car set1) set2) (union (cdr set1) set2)]
     [else (cons (car set1) (union (cdr set1) set2))]))
 
 (define (intersectall l-set)
   (cond
-    [(null? (cdr l-set) (car l-set))]
+    [(null? (cdr l-set)) (car l-set)]
     [else (intersect (car l-set) (intersectall (cdr l-set)))]))
 
 (define (a-pair? x)
@@ -48,13 +48,36 @@
     [(atom? x) #f]
     [(null? x) #f]
     [(null? (cdr x)) #f]
-    [(null? (cdr (cdr x))) #f]
+    [(null? (cdr (cdr x))) #t]
     [else #f]))
 
 (define (revrel rel)
   (cond
     [(null? rel) '()]
-    [else (cons (cons (car (cdr (car rel))) (cons (car (car rel)) '()))) (revrel (cdr rel))]))
+    [(cons (build (second (car rel)) (first (car rel))) (revrel (cdr rel)))]))
+
+(define (first lat)
+  (car lat))
+
+(define (second lat)
+  (car (cdr lat)))
+
+(define (build a b)
+  (cons a (cons b '())))
+
+(define (third lat)
+  (car (cdr (cdr lat))))
+
+(define (fun? rel)
+  (set? (firsts rel)))
+
+(define (fullfun? rel)
+  (and (fun? rel) (fun? (revrel rel))))
+
+(define (firsts l)
+  (cond
+    [(null? l) '()]
+    [(cons (car (car l)) (firsts (cdr l)))]))
 
 (define (member? a b)
   (cond
@@ -63,4 +86,4 @@
     [else (member? a (cdr b))]))
 
 (define (atom? x)
-  (not list? x))
+  (not (list? x)))
